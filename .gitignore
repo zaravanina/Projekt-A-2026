@@ -1,0 +1,16 @@
+# Node
+node_modules/
+
+# Env files
+.env
+backend/.env
+
+# Database
+backend/app.db
+
+# Build output
+dist/
+frontend/dist/
+
+# Logs
+*.log

@@ -1,0 +1,13 @@
+import crypto from "crypto";
+
+export function newToken(bytes = 32): string {
+  return crypto.randomBytes(bytes).toString("hex");
+}
+
+export function sha256(input: string): string {
+  return crypto.createHash("sha256").update(input).digest("hex");
+}
+
+export function nowMs(): number {
+  return Date.now();
+}
