@@ -31,21 +31,23 @@ const submit = async () => {
   loading.value = true;
   msg.value = "";
 
-  const r = await fetch("/api/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({
-      email: email.value,
-      name: name.value,
-      password: password.value,
-    }),
+  const body = new URLSearchParams({
+    email: email.value,
+    name: name.value,
+    password: password.value,
   });
 
-  const data = await r.json().catch(() => ({}));
+  const r = await fetch("/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    credentials: "include",
+    body,
+  });
 
+  // server returns HTML on success/failure, not JSON
   if (!r.ok) {
-    msg.value = data?.error ?? "Register failed";
+    const text = await r.text().catch(() => "");
+    msg.value = text || "Register failed";
     loading.value = false;
     return;
   }
